@@ -1,0 +1,559 @@
+{
+	"info": {
+		"_postman_id": "fb5004ae-1537-42c6-b4d2-74cd04d566dc",
+		"name": "My course",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get_method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/get_method?name=Mary&age=33",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"get_method"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Mary"
+						},
+						{
+							"key": "age",
+							"value": "33"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "first",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/first",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"first"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "login",
+							"value": "mir",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "qwerty",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.person.u_name[0]).to.eql(\"mir\");\r",
+							"});\r",
+							"\r",
+							"var resData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"u_salary_1.5_year\", resData.person.u_salary_1_5_year);\r",
+							"\r",
+							"pm.test(\"Shema\", function() \r",
+							"{ \r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"object\");\r",
+							"    pm.expect(jsonData.person).to.be.an(\"object\");\r",
+							"    pm.expect(jsonData.person.u_age).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.person.u_name).to.be.an(\"array\");\r",
+							"    pm.expect(jsonData.person.u_name[0]).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.person.u_name[1]).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.person.u_name[2]).to.be.an(\"number\");\r",
+							"    pm.expect(jsonData.person.u_salary_1_5_year).to.be.an(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Salary\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    let after_6_months = 2;\r",
+							"    let after_12_months = 2.9;\r",
+							"    let after_18_months = 4;\r",
+							"    pm.expect(jsonData.qa_salary_after_6_months).to.eq(jsonData.start_qa_salary * after_6_months);\r",
+							"    pm.expect(jsonData.qa_salary_after_12_months).to.eq(jsonData.start_qa_salary * after_12_months);\r",
+							"    pm.expect(jsonData.person.u_salary_1_5_year).to.eq(jsonData.start_qa_salary * after_18_months);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "33",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "mir",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/user_info",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user_info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new_data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Shema\", function() \r",
+							"{ \r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"object\");\r",
+							"    pm.expect(jsonData.age).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.name).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.salary).to.be.an(\"array\");\r",
+							"    pm.expect(jsonData.salary[0]).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.salary[1]).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.salary[2]).to.be.a(\"string\");\r",
+							"})\r",
+							"\r",
+							"\r",
+							"pm.test(\"Multiplication is OK\", function () {\r",
+							"    const body = pm.response.json();\r",
+							"    var salary = body.salary;    \r",
+							"    pm.expect(salary[0]).eql(salary[0]);\r",
+							"    pm.expect(parseInt(salary[1])).eql(salary[0] * 2); //interger to string or use Number method\r",
+							"    pm.expect(parseInt(salary[2])).eql(salary[0] * 3); //interger to string or use Number method\r",
+							"});\r",
+							"\r",
+							"pm.test (\"salary2>than\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(Number(jsonData.salary[2])).to.greaterThan(Number(jsonData.salary[0]));\r",
+							"    pm.expect(Number(jsonData.salary[2])).to.greaterThan(Number(jsonData.salary[1]));\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "33",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "1000",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "mir",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/new_data",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"new_data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test_pet_info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Schema\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"object\");\r",
+							"    pm.expect(jsonData.age).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.daily_food).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.daily_sleep).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.name).to.be.a(\"string\");\r",
+							"})\r",
+							"\r",
+							"\r",
+							"pm.test ('correct multiply', function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    var request_data = request.data;\r",
+							"    var reg_weight = request_data.weight;\r",
+							"    pm.expect(jsonData.daily_sleep).to.eql(reg_weight * 2.5);\r",
+							"    pm.expect(jsonData.daily_food).to.eql(reg_weight * 0.012);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "33",
+							"type": "text"
+						},
+						{
+							"key": "weight",
+							"value": "1000",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "mir",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/test_pet_info",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"test_pet_info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_test_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var resData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"myname\", resData.name);\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    let myname = pm.environment.get('myname')\r",
+							"    pm.expect(jsonData.name).to.eql(myname);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Shema\", function() \r",
+							"{ \r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"object\");\r",
+							"    pm.expect(jsonData.age).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.family).to.be.an(\"object\");\r",
+							"    pm.expect(jsonData.family.children).to.be.an(\"array\");\r",
+							"    pm.expect(jsonData.family.children[0][0]).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.family.children[0][1]).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.family.children[1][0]).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.family.children[1][1]).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.family.u_salary_1_5_year).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.name).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.salary).to.be.a(\"number\");\r",
+							"})\r",
+							"\r",
+							"\r",
+							"pm.test ('age', function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    let request_data = request.data;\r",
+							"    let age1 = request_data.age;\r",
+							"    pm.expect(jsonData.age).to.eql(age1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "33",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "{{u_salary_1.5_year}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "mir",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/get_test_user",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"get_test_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "currency",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//var resData = JSON.parse(responseBody);\r",
+							"//postman.setEnvironmentVariable(\"cur_id\", resData.cur_id);\r",
+							"\r",
+							"//get random number\r",
+							"function getRandom(min, max) \r",
+							"{\r",
+							"    return Math.random() * (max - min) + min;\r",
+							"}\r",
+							"\r",
+							"//random number\r",
+							"let randomNum = Math.round(getRandom(0, 227));\r",
+							"\r",
+							"//parse response\r",
+							"let jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"//parse data (random)\r",
+							"let curID = JSON.parse(jsonData[randomNum].cur_ID);\r",
+							"\r",
+							"//set cur_ID to environment\r",
+							"postman.setEnvironmentVariable(\"cur_ID\",curID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/currency",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"currency"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "curr_byn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Schema\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"object\");\r",
+							"    pm.expect(jsonData.Cur_Abbreviation).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.Cur_ID).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.Cur_Name).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.Cur_OfficialRate).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.Cur_Scale).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.Date).to.be.a(\"string\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "curr_code",
+							"value": "145",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/curr_byn",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"curr_byn"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
